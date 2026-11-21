@@ -213,6 +213,7 @@ func (c *defaultConnectorImpl) realConnect() (net.Conn, error) {
 		return nil, err
 	}
 	dialOptions := []libnet.DialOption{}
+	dialOptions = append(dialOptions, libnet.WithAfterHook(libnet.AfterHook{Hook: netpkg.DialHookKnock()}))
 	protocol := c.cfg.Transport.Protocol
 	switch protocol {
 	case "websocket":

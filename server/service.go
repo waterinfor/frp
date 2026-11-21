@@ -228,6 +228,8 @@ func NewService(cfg *v1.ServerConfig) (*Service, error) {
 		return nil, fmt.Errorf("create server listener error, %v", err)
 	}
 
+	ln = netpkg.WrapKnockListener(ln)
+
 	svr.muxer = mux.NewMux(ln)
 	svr.muxer.SetKeepAlive(time.Duration(cfg.Transport.TCPKeepAlive) * time.Second)
 	go func() {
